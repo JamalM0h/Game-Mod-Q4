@@ -353,6 +353,7 @@ stateResult_t rvWeaponRocketLauncher::State_Raise ( const stateParms_t& parms ) 
 				SetState ( "Idle", 4 );
 				return SRESULT_DONE;
 			}
+			}
 			if ( wsfl.lowerWeapon ) {
 				SetState ( "Lower", 4 );
 				return SRESULT_DONE;
