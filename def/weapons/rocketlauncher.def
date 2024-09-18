@@ -84,6 +84,7 @@ entityDef weapon_rocketlauncher
 	
 	"weaponname"				"Rocket Launcher"
 	"def_projectile"			"projectile_rocket"
+	"def2_projectile"			"projectile_grenade"
 	"ammoType"					"ammo_rocketlauncher"
 	"clipSize"					"0"
 	"ammoRequired"				"0"
@@ -331,7 +332,8 @@ entityDef projectile_rocket
 	"def_splash_damage"			"damage_rocketSplash"
 																											
 	"speed"						"900"
-	"fuse"						"6"
+	"gravity"					"-1"
+	"fuse"						"0.6"
 	"push"						"48000"
 	
 							
