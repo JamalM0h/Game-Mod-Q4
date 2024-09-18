@@ -1222,7 +1222,7 @@ void idProjectile::Explode( const trace_t *collision, const bool showExplodeFX, 
 			removeTime = delay;
 		}
 	}
-			
+
  	CancelEvents( &EV_Explode );
 	PostEventMS( &EV_Remove, removeTime );
 }
