@@ -906,6 +906,7 @@ void rvWeapon::InitDefs( void ) {
 	
 	// get the projectile
 	attackDict.Clear();
+	attackDict2.Clear();
 
 	// Projectile
 	if ( spawnArgs.GetString( "def_projectile", "", &name ) && *name ) {
@@ -921,7 +922,26 @@ void rvWeapon::InitDefs( void ) {
 				attackDict = def->dict;
 			}
 		}
-	} else if ( spawnArgs.GetString( "def_hitscan", "", &name ) && *name ) {
+	}
+
+	if (spawnArgs.GetString("def2_projectile", "", &name) && *name) {
+		def = gameLocal.FindEntityDef(name, false);
+		if (!def) {
+			gameLocal.Warning("Unknown projectile '%s' for weapon '%s'", name, weaponDef->GetName());
+		}
+		else {
+			spawnclass = def->dict.GetString("spawnclass");
+			cls = idClass::GetClass(spawnclass);
+			if (!cls || !cls->IsType(idProjectile::GetClassType())) {
+				gameLocal.Warning("Invalid spawnclass '%s' for projectile '%s' (used by weapon '%s')", spawnclass, name, weaponDef->GetName());
+			}
+			else {
+				attackDict2 = def->dict;
+			}
+		}
+	}
+
+	else if ( spawnArgs.GetString( "def_hitscan", "", &name ) && *name ) {
 		def = gameLocal.FindEntityDef( name, false );
 		if ( !def ) {
 			gameLocal.Warning( "Unknown hitscan '%s' for weapon '%s'", name, weaponDef->GetName ( ) );
@@ -2712,8 +2732,7 @@ void rvWeapon::LaunchProjectiles ( idDict& dict, const idVec3& muzzleOrigin, con
 		}
 		
 		// Launch the actual projectile
-		proj->Launch( muzzle_pos + startOffset, dir, pushVelocity, fuseOffset, power );
-		
+		proj->Launch( muzzleOrigin, dir, pushVelocity, fuseOffset, power);
 		// Increment the projectile launch count and let the derived classes
 		// mess with it if they want.
 		OnLaunchProjectile ( proj );

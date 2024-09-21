@@ -35,6 +35,7 @@ protected:
 	virtual void			OnLaunchProjectile	( idProjectile* proj );
 
 	void					SetRocketState		( const char* state, int blendFrames );
+	void                    GrenadeShrapnel     ();
 
 	rvClientEntityPtr<rvClientEffect>	guideEffect;
 	idList< idEntityPtr<idEntity> >		guideEnts;
@@ -442,14 +443,14 @@ stateResult_t rvWeaponRocketLauncher::State_Fire ( const stateParms_t& parms ) {
 	enum {
 		STAGE_INIT,
 		STAGE_WAIT,
-	};	
+	};
 	switch ( parms.stage ) {
 		case STAGE_INIT:
-			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));		
-			Attack ( false, 10, 5, 0, 1.0f );
-			PlayAnim ( ANIMCHANNEL_LEGS, "fire", parms.blendFrames );	
+			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
+			Attack(false, 1, 0, 0, 10);
+			GrenadeShrapnel();
+			PlayAnim ( ANIMCHANNEL_LEGS, "fire", parms.blendFrames );
 			return SRESULT_STAGE ( STAGE_WAIT );
-	
 		case STAGE_WAIT:			
 			if ( wsfl.attack && gameLocal.time >= nextAttackTime && ( gameLocal.isClient || AmmoInClip ( ) ) && !wsfl.lowerWeapon ) {
 				SetState ( "Fire", 0 );
@@ -462,6 +463,11 @@ stateResult_t rvWeaponRocketLauncher::State_Fire ( const stateParms_t& parms ) {
 			return SRESULT_WAIT;
 	}
 	return SRESULT_ERROR;
+}
+
+void rvWeaponRocketLauncher::GrenadeShrapnel()
+{
+	LaunchProjectiles(attackDict2, idVec3(9765.80, -7051.90, 151.51), muzzleAxis, 5, 10, 0, 10);
 }
 
 /*

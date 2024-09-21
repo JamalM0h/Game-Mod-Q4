@@ -340,6 +340,7 @@ public:
 	// do not have to be copied across the DLL boundary when entities are spawned
 	idDict							attackAltDict;
 	idDict							attackDict;
+	idDict                          attackDict2;
 	idDict							brassDict;
 
 	// Melee

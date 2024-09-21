@@ -2939,6 +2939,21 @@ void Cmd_BuyItem_f( const idCmdArgs& args ) {
 
 	player->GenerateImpulseForBuyAttempt( args.Argv(1) );
 }
+
+void Cmd_Locate_f(const idCmdArgs& args) {
+	idPlayer* player;
+	idVec3 playerposi;
+
+	player = gameLocal.GetLocalPlayer();
+
+	if (!player) {
+		return;
+	}
+
+	playerposi = player->GetEyePosition();
+
+	gameLocal.Printf("location: (%f, %f, %f)", playerposi.x, playerposi.y, playerposi.z);
+}
 // RITUAL END
 
 void Cmd_PlayerEmote_f( const idCmdArgs& args ) {
@@ -3231,6 +3246,7 @@ void idGameLocal::InitConsoleCommands( void ) {
 // squirrel: Mode-agnostic buymenus
 	cmdSystem->AddCommand( "buyMenu",				Cmd_ToggleBuyMenu_f,		CMD_FL_GAME,				"Toggle buy menu (if in a buy zone and the game type supports it)" );
 	cmdSystem->AddCommand( "buy",					Cmd_BuyItem_f,				CMD_FL_GAME,				"Buy an item (if in a buy zone and the game type supports it)" );
+	cmdSystem->AddCommand( "locate",                Cmd_Locate_f,               CMD_FL_GAME,                "Locate player position");
 // RITUAL END
 
 }
