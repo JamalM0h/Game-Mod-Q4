@@ -516,6 +516,9 @@ void idProjectile::Launch( const idVec3 &start, const idVec3 &dir, const idVec3 
 idProjectile::Think
 ================
 */
+
+idVec3 pos;
+
 void idProjectile::Think( void ) {
 	// run physics
 	if ( thinkFlags & TH_PHYSICS ) {
@@ -546,6 +549,8 @@ void idProjectile::Think( void ) {
 				}
 			}
 		}
+
+		pos = physicsObj.GetOrigin();
 
 		// Stop the trail effect if the physics flag was removed
 		if ( flyEffect && flyEffectAttenuateSpeed > 0.0f ) {
@@ -1063,6 +1068,7 @@ void idProjectile::Killed( idEntity *inflictor, idEntity *attacker, int damage, 
 		physicsObj.PutToRest();
 	} else {
 		Fizzle();
+		
 	}
 }
 
@@ -1474,6 +1480,8 @@ bool idProjectile::GetPhysicsToVisualTransform( idVec3 &origin, idMat3 &axis ) {
 	origin.Zero();
 	return true;
 }
+
+
 
 /*
 ===============================================================================

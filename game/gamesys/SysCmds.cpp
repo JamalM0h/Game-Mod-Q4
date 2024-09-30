@@ -2952,7 +2952,7 @@ void Cmd_Locate_f(const idCmdArgs& args) {
 
 	playerposi = player->GetEyePosition();
 
-	gameLocal.Printf("location: (%f, %f, %f)", playerposi.x, playerposi.y, playerposi.z);
+	gameLocal.Printf("Player location: (%f, %f, %f) \n", playerposi.x, playerposi.y, playerposi.z);
 }
 // RITUAL END
 

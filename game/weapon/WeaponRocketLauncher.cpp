@@ -35,7 +35,7 @@ protected:
 	virtual void			OnLaunchProjectile	( idProjectile* proj );
 
 	void					SetRocketState		( const char* state, int blendFrames );
-	void                    GrenadeShrapnel     ();
+	void                    GrenadeShrapnel     ( idVec3 rockpos);
 
 	rvClientEntityPtr<rvClientEffect>	guideEffect;
 	idList< idEntityPtr<idEntity> >		guideEnts;
@@ -133,6 +133,8 @@ void rvWeaponRocketLauncher::Spawn ( void ) {
 	SetRocketState ( "Rocket_Idle", 0 );
 }
 
+int grenaded = 0;
+
 /*
 ================
 rvWeaponRocketLauncher::Think
@@ -141,11 +143,18 @@ rvWeaponRocketLauncher::Think
 void rvWeaponRocketLauncher::Think ( void ) {	
 	trace_t	tr;
 	int		i;
+	idVec3 rockposi = idVec3(9496.44, -7094.13, 192.05);
 
 	rocketThread.Execute ( );
 
 	// Let the real weapon think first
 	rvWeapon::Think ( );
+
+	if ((rock != nullptr) && (grenaded == 1) && (rock->IsHidden())) {
+		GrenadeShrapnel(rock->pos);
+		grenaded = 0; 
+		rock = nullptr;
+	}
 
 	// IF no guide range is set then we dont have the mod yet	
 	if ( !guideRange ) {
@@ -171,10 +180,10 @@ void rvWeaponRocketLauncher::Think ( void ) {
 				proj->SetSpeed ( guideSpeedFast, (1.0f - (proj->GetSpeed ( ) - guideSpeedSlow) / (guideSpeedFast - guideSpeedSlow)) * guideAccelTime );
 			}
 		}
-
+		
 		return;
 	}
-						
+	
 	// Cast a ray out to the lock range
 // RAVEN BEGIN
 // ddynerman: multiple clip worlds
@@ -448,7 +457,7 @@ stateResult_t rvWeaponRocketLauncher::State_Fire ( const stateParms_t& parms ) {
 		case STAGE_INIT:
 			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 			Attack(false, 1, 0, 0, 10);
-			GrenadeShrapnel();
+			grenaded = 1;
 			PlayAnim ( ANIMCHANNEL_LEGS, "fire", parms.blendFrames );
 			return SRESULT_STAGE ( STAGE_WAIT );
 		case STAGE_WAIT:			
@@ -465,9 +474,9 @@ stateResult_t rvWeaponRocketLauncher::State_Fire ( const stateParms_t& parms ) {
 	return SRESULT_ERROR;
 }
 
-void rvWeaponRocketLauncher::GrenadeShrapnel()
+void rvWeaponRocketLauncher::GrenadeShrapnel( idVec3 rockpos)
 {
-	LaunchProjectiles(attackDict2, idVec3(9765.80, -7051.90, 151.51), muzzleAxis, 5, 10, 0, 10);
+	LaunchProjectiles(attackDict2, rockpos, muzzleAxis, 5, 10, 0, 10);
 }
 
 /*

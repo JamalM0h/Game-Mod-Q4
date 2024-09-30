@@ -2736,6 +2736,7 @@ void rvWeapon::LaunchProjectiles ( idDict& dict, const idVec3& muzzleOrigin, con
 		// Increment the projectile launch count and let the derived classes
 		// mess with it if they want.
 		OnLaunchProjectile ( proj );
+		rock = proj;
 	}
 }
 

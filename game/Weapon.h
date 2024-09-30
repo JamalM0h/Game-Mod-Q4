@@ -342,6 +342,8 @@ public:
 	idDict							attackDict;
 	idDict                          attackDict2;
 	idDict							brassDict;
+	
+	idProjectile*                   rock;			
 
 	// Melee
 	const idDeclEntityDef *			meleeDef;

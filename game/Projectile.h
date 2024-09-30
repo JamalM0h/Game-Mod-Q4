@@ -58,6 +58,7 @@ public :
 
 	// information about what kind of projectile we are, used for death messages
 	int						methodOfDeath;
+	idVec3                  pos;
 
 	virtual void			ClientPredictionThink( void );
 	virtual void			WriteToSnapshot( idBitMsgDelta &msg ) const;
