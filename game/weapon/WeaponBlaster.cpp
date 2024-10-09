@@ -397,6 +397,10 @@ stateResult_t rvWeaponBlaster::State_Charged ( const stateParms_t& parms ) {
 rvWeaponBlaster::State_Fire
 ================
 */
+
+int numshots = 0;
+bool fan = false;
+
 stateResult_t rvWeaponBlaster::State_Fire ( const stateParms_t& parms ) {
 	enum {
 		FIRE_INIT,
@@ -425,21 +429,38 @@ stateResult_t rvWeaponBlaster::State_Fire ( const stateParms_t& parms ) {
 			}
 
 
-	
-			if ( gameLocal.time - fireHeldTime > chargeTime ) {	
-				Attack ( true, 1, spread, 0, 1.0f );
-				PlayEffect ( "fx_chargedflash", barrelJointView, false );
-				PlayAnim( ANIMCHANNEL_ALL, "chargedfire", parms.blendFrames );
+			if ( gameLocal.time - fireHeldTime > chargeTime ) {
+				nextAttackTime = gameLocal.time + (fireRate);
+				fan = true;
+				PlayEffect("fx_chargedflash", barrelJointView, false);
+				PlayAnim(ANIMCHANNEL_ALL, "chargedfire", parms.blendFrames);
+					
+				
+				
 			} else {
-				Attack ( false, 1, spread, 0, 1.0f );
-				PlayEffect ( "fx_normalflash", barrelJointView, false );
-				PlayAnim( ANIMCHANNEL_ALL, "fire", parms.blendFrames );
+				if (fan) {
+					Attack(false, 1, 2, 0, 1.0f);
+					player->SetViewAngles(player->viewAngles + idAngles(-3.5, 0, 0));
+					PlayEffect("fx_normalflash", barrelJointView, false);
+					PlayAnim(ANIMCHANNEL_ALL, "fire", parms.blendFrames);
+					numshots++;
+				}
+
 			}
 			fireHeldTime = 0;
 			
 			return SRESULT_STAGE(FIRE_WAIT);
 		
 		case FIRE_WAIT:
+			if (gameLocal.time >= nextAttackTime && wsfl.attack && numshots < 6) {
+				SetState("Fire", 4);
+			}
+			if (numshots >= 6 && !wsfl.attack && fireHeldTime == 0)
+			{
+				numshots = 0;
+				fan = false;
+			}
+
 			if ( AnimDone ( ANIMCHANNEL_ALL, 4 ) ) {
 				SetState ( "Idle", 4 );
 				return SRESULT_DONE;
