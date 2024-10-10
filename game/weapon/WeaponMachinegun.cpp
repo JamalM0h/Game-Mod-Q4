@@ -219,6 +219,9 @@ stateResult_t rvWeaponMachinegun::State_Idle( const stateParms_t& parms ) {
 rvWeaponMachinegun::State_Fire
 ================
 */
+
+int numrounds = 0;
+
 stateResult_t rvWeaponMachinegun::State_Fire ( const stateParms_t& parms ) {
 	enum {
 		STAGE_INIT,
@@ -229,10 +232,23 @@ stateResult_t rvWeaponMachinegun::State_Fire ( const stateParms_t& parms ) {
 			if ( wsfl.zoom ) {
 				nextAttackTime = gameLocal.time + (altFireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 				Attack ( true, 1, spreadZoom, 0, 1.0f );
+				numrounds++;
+				if (numrounds >= 8)
+				{
+					LaunchProjectiles(attackDict2, playerViewOrigin, muzzleAxis, 1, 0, 0, 1.0f);
+					numrounds = 0;
+				}
 				fireHeld = true;
 			} else {
 				nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
-				Attack ( false, 1, spread, 0, 1.0f );
+				Attack( false, 1, spread, 0, 1.0f );
+				numrounds++;
+				if (numrounds >= 8)
+				{
+					LaunchProjectiles(attackDict2, playerViewOrigin, muzzleAxis, 1, 0, 0, 1.0f);
+					numrounds = 0;
+				}
+
 			}
 			PlayAnim ( ANIMCHANNEL_ALL, "fire", 0 );	
 			return SRESULT_STAGE ( STAGE_WAIT );
