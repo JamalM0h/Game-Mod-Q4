@@ -220,6 +220,9 @@ stateResult_t rvWeaponHyperblaster::State_Idle( const stateParms_t& parms ) {
 rvWeaponHyperblaster::State_Fire
 ================
 */
+
+int iniFireRate = 0;
+
 stateResult_t rvWeaponHyperblaster::State_Fire ( const stateParms_t& parms ) {
 	enum {
 		STAGE_INIT,
@@ -229,7 +232,11 @@ stateResult_t rvWeaponHyperblaster::State_Fire ( const stateParms_t& parms ) {
 		case STAGE_INIT:
 			SpinUp ( );
 			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
-			Attack ( false, 1, spread, 0, 1.0f );
+			Attack(false, 1, 1, 0, 1.0f);
+			if (fireRate >= iniFireRate * 0.15)
+			{
+				fireRate = fireRate * 0.85;
+			}
 			if ( ClipSize() ) {
 				viewModel->SetShaderParm ( HYPERBLASTER_SPARM_BATTERY, (float)AmmoInClip()/ClipSize() );
 			} else {
@@ -244,9 +251,14 @@ stateResult_t rvWeaponHyperblaster::State_Fire ( const stateParms_t& parms ) {
 				return SRESULT_DONE;
 			}
 			if ( (!wsfl.attack || !AmmoInClip() || wsfl.lowerWeapon) && AnimDone ( ANIMCHANNEL_ALL, 0 ) ) {
+				fireRate = SEC2MS(spawnArgs.GetFloat("fireRate"));
 				SetState ( "Idle", 0 );
 				return SRESULT_DONE;
-			}		
+			}
+			if (iniFireRate == 0)
+			{
+				iniFireRate = fireRate;
+			}
 			return SRESULT_WAIT;
 	}
 	return SRESULT_ERROR;

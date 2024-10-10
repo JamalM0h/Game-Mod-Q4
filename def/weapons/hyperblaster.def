@@ -66,7 +66,7 @@ entityDef weapon_hyperblaster
   	"model_world"				"weapon_hyperblaster_world"
 	"model"						"models/weapons/hyperblaster/w_hb.lwo"
 	"def_dropItem"				"weapon_hyperblaster"
-	"def_projectile"			"projectile_hyperblaster"
+	"def_hitscan"				"hitscan_bullet"
 
 	"joint_attach"				"HB_ATTACHER"
 	"joint_view_guiLight"		"body"
@@ -78,7 +78,7 @@ entityDef weapon_hyperblaster
 	"crosshairOffsetX"			"0"
 	"crosshairOffsetY"			"0"
 
-	"fireRate"					".08"
+	"fireRate"					"0.70"
 	"spread"					"2"
 	"spread_mp"					"0"
 
@@ -92,8 +92,8 @@ entityDef weapon_hyperblaster
 	"inv_start_ammo_hyperblaster"		"60"
 	"ammoRegenStep"				"5"
 	"ammoRegenTime"				"1500"
-	"clipSize"					"60"									// large for smooth regen
-	"ammoRequired"				"1"										// ammo is handled in the script file
+	"clipSize"					"0"									// large for smooth regen
+	"ammoRequired"				"0"										// ammo is handled in the script file
 	"gui"						"guis/weapons/hyperblaster_ammo.gui"
 	"mtr_icon"					"gfx/guis/hud/icons/gun_hyperblaster"
 	
@@ -107,13 +107,13 @@ entityDef weapon_hyperblaster
 	
 	"mtr_flashShader"			"lights/muzzleflash"
 	"flashColor"				"0.7 0.8 1"
-	"flashRadius"				"200"
+	"flashRadius"				"1"
 	"flashPointLight"			"1"
 	"flashTime"					".1"
 	"flashViewOffset"			"15 -2 5"
 
 	"mtr_guiLightShader"		"lights/viewWeaponGuiLight"
-	"glightRadius"				"1.3"
+	"glightRadius"				".1"
 	"glightOffset"				"0 2 0"
 
 	"snd_quaddamage"			"weapon_quaddamage_fire"
@@ -312,8 +312,9 @@ entityDef projectile_hyperblaster
 	"clipmask_largeshot"		"0"
 	"def_damage"				"damage_hyperblaster"
 	
-	"speed"						"1800"
+	"speed"						"800"
 	"orient_towards_motion"		"1"
+	"fuse"                      "0.5"
 
 	"fx_impact"			"effects/weapons/hyperblaster/impact_default.fx"
 	"fx_fly"			"effects/weapons/hyperblaster/fly.fx"

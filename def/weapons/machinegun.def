@@ -98,10 +98,12 @@ entityDef weapon_machinegun
 	"mtr_crosshair"				"gfx/guis/crosshairs/crosshair_machinegun"
 	"def_hitscan"				"hitscan_bullet"
 	"def_althitscan"			"hitscan_zoomed_bullet"
+	"def2_projectile"           "projectile_rocket"
+	
 	
 	"ammoType"					"ammo_machinegun"
-	"ammoRequired"				"1"
-	"clipSize"					"40"
+	"ammoRequired"				"0"
+	"clipSize"					"0"
 	"lowAmmo"					"10"
 	"gui"						"guis/weapons/machinegun_ammo.gui"
 	"gui2"						"guis/weapons/machinegun_inview_scope.gui"
