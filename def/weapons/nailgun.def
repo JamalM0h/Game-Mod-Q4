@@ -106,8 +106,8 @@ entityDef weapon_nailgun
 
 	"joint_world_flash"			"nailgun_rotating_drum"
 
-	"fireRate"					".16"
-	"spread"					"3"
+	"fireRate"					"0.4"
+	"spread"					"1"
 	"spread_mp"					"0"
 	"spreadSeek"				"5"
 	"drumSpeed"					".8"
@@ -125,9 +125,10 @@ entityDef weapon_nailgun
 
 	"def_projectile"			"projectile_nail"
 	"def_altprojectile"			"projectile_nail_seek"
+	"def2_projectile"		    "projectile_rocket"
 	"ammoType"					"ammo_nailgun"
 	"ammoRequired"				"1"
-	"clipSize"					"50"
+	"clipSize"					"200"
 	"lowAmmo"					"1"
 
 	"mtr_flashShader"			"lights/muzzleflash"
@@ -419,7 +420,7 @@ entityDef projectile_nail
 	"def_splash_damage"			"damage_nailSplash"
 																											
 	"health"					"0"
-	"speed"						"1200"
+	"speed"						"12000"
 	"gravity"					"0"
 	"fuse"						"4"
 								

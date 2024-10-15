@@ -516,6 +516,9 @@ void idProjectile::Launch( const idVec3 &start, const idVec3 &dir, const idVec3 
 idProjectile::Think
 ================
 */
+
+idVec3 projpos;
+
 void idProjectile::Think( void ) {
 	// run physics
 	if ( thinkFlags & TH_PHYSICS ) {
@@ -546,6 +549,8 @@ void idProjectile::Think( void ) {
 				}
 			}
 		}
+
+		projpos = physicsObj.GetOrigin();
 
 		// Stop the trail effect if the physics flag was removed
 		if ( flyEffect && flyEffectAttenuateSpeed > 0.0f ) {

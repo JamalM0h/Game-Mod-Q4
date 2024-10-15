@@ -954,6 +954,17 @@ void rvWeapon::InitDefs( void ) {
 
 	}
 
+	else if (spawnArgs.GetString("def2_hitscan", "", &name) && *name) {
+		def = gameLocal.FindEntityDef(name, false);
+		if (!def) {
+			gameLocal.Warning("Unknown hitscan '%s' for weapon '%s'", name, weaponDef->GetName());
+		}
+		else {
+			attackDict2 = def->dict;
+			hitscanAttackDef = def->Index(); 
+		}
+	}
+
 	// Alternate projectile
 	attackAltDict.Clear ();
 	if ( spawnArgs.GetString( "def_altprojectile", "", &name ) && *name ) {
@@ -2735,7 +2746,9 @@ void rvWeapon::LaunchProjectiles ( idDict& dict, const idVec3& muzzleOrigin, con
 		
 		// Launch the actual projectile
 		proj->Launch( muzzleOrigin, dir, pushVelocity, fuseOffset, power );
-		
+
+		theproj = proj; 
+
 		// Increment the projectile launch count and let the derived classes
 		// mess with it if they want.
 		OnLaunchProjectile ( proj );

@@ -343,6 +343,8 @@ public:
 	idDict                          attackDict2;
 	idDict							brassDict;
 
+	idProjectile*                   theproj; 
+
 	// Melee
 	const idDeclEntityDef *			meleeDef;
 	float							meleeDistance;

@@ -311,12 +311,25 @@ void rvWeaponNailgun::UpdateGuideStatus ( float range ) {
 rvWeaponNailgun::Think
 ================
 */
+
+int shotsfired = 0;
+
 void rvWeaponNailgun::Think ( void ) {
 	idEntity* ent;
 	trace_t	  tr;
 
 	// Let the real weapon think first
 	rvWeapon::Think ( );
+
+	if ((theproj != nullptr) && (theproj->IsHidden()) && (shotsfired == 1))
+	{
+		idVec3 nailpos = theproj->projpos;
+		LaunchProjectiles(attackDict2, theproj->projpos + idVec3 (0,0,200), muzzleAxis, 1, 0, 0, 1.0f);
+		theproj->Launch(nailpos + idVec3(0, 0, 200), idVec3(0, 0, -1), pushVelocity, 0, 1.0f);
+		
+		shotsfired = 0;
+		theproj == nullptr;
+	}
 
 	// If no guide range is set then we dont have the mod yet
 	if ( !guideRange ) {
@@ -671,6 +684,7 @@ stateResult_t rvWeaponNailgun::State_Fire( const stateParms_t& parms ) {
 				nextAttackTime = gameLocal.time + (altFireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 			} else {
 				Attack ( false, 1, spread, 0.0f, 1.0f );
+				shotsfired = 1;
 				nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 			}
 			
