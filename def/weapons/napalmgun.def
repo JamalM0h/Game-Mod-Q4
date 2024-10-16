@@ -260,15 +260,15 @@ entityDef projectile_napalm
 	"def_damage"				"damage_napalmDirect"
 	"def_splash_damage"			"damage_napalmSplash"	
 
-	"speed"						"1200"
-	"angular_velocity"			"-10 5 1"
+	"speed"						"2000"
+	"angular_velocity"			"-5 5 1"
 	"settle_duration"			"0.08"
 	
 	"linear_friction"			"0"
 	"angular_friction"			"0"
 	"contact_friction"			"10"
 	//"bounce"					".65"
-	"gravity"					"1.2"
+	"gravity"					"2"
 	"fuse"						"2.5"
 								
 	"detonate_on_fuse"			"1"
@@ -335,7 +335,7 @@ entityDef impact_napalm_projectile
 	"gravity"					"1.2"
 	"remove_time"				"100"
 
-	"angular_velocity"			"-10 5 1"
+	"angular_velocity"			"-3 1 1"
 
 	"linear_friction"			"0"
 	"angular_friction"			"0"

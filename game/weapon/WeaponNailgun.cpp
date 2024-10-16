@@ -312,7 +312,7 @@ rvWeaponNailgun::Think
 ================
 */
 
-int shotsfired = 0;
+int shotsfired;
 
 void rvWeaponNailgun::Think ( void ) {
 	idEntity* ent;

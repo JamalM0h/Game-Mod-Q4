@@ -4,6 +4,10 @@
 #include "../Game_local.h"
 #include "../Weapon.h"
 
+#ifndef __GAME_PROJECTILE_H__
+#include "../Projectile.h"
+#endif
+
 class rvWeaponGrenadeLauncher : public rvWeapon {
 public:
 
@@ -12,6 +16,8 @@ public:
 	rvWeaponGrenadeLauncher ( void );
 
 	virtual void			Spawn				( void );
+	virtual void			Think               ( void );
+
 	void					PreSave				( void );
 	void					PostSave			( void );
 
@@ -49,6 +55,19 @@ rvWeaponGrenadeLauncher::Spawn
 */
 void rvWeaponGrenadeLauncher::Spawn ( void ) {
 	SetState ( "Raise", 0 );	
+}
+
+int wave;
+
+void rvWeaponGrenadeLauncher::Think(void) {
+	
+	rvWeapon::Think();
+
+	if ((theproj != nullptr) && (wave > 0) && (theproj->IsHidden())) {
+		LaunchProjectiles(attackDict2, theproj->projpos + idVec3(0, 0, 50), muzzleAxis, 1, 0, 0, 1.0f);
+		wave--;
+	}
+	
 }
 
 /*
@@ -144,17 +163,20 @@ stateResult_t rvWeaponGrenadeLauncher::State_Fire ( const stateParms_t& parms ) 
 	};	
 	switch ( parms.stage ) {
 		case STAGE_INIT:
-			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
+			nextAttackTime = gameLocal.time + ((fireRate + fireRate) * owner->PowerUpModifier ( PMOD_FIRERATE ));
 			Attack ( false, 1, spread, 0, 1.0f );
+			wave = 60;
 			PlayAnim ( ANIMCHANNEL_ALL, GetFireAnim(), 0 );	
 			return SRESULT_STAGE ( STAGE_WAIT );
 	
 		case STAGE_WAIT:		
+
 			if ( wsfl.attack && gameLocal.time >= nextAttackTime && AmmoInClip() && !wsfl.lowerWeapon ) {
 				SetState ( "Fire", 0 );
 				return SRESULT_DONE;
 			}
-			if ( AnimDone ( ANIMCHANNEL_ALL, 0 ) ) {
+
+			if ( AnimDone ( ANIMCHANNEL_ALL, 0 ) ) {			
 				SetState ( "Idle", 0 );
 				return SRESULT_DONE;
 			}		
