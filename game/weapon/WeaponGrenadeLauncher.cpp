@@ -64,7 +64,7 @@ void rvWeaponGrenadeLauncher::Think(void) {
 	rvWeapon::Think();
 
 	if ((theproj != nullptr) && (wave > 0) && (theproj->IsHidden())) {
-		LaunchProjectiles(attackDict2, theproj->projpos + idVec3(0, 0, 50), muzzleAxis, 1, 0, 0, 1.0f);
+		LaunchProjectiles(attackDict2, theproj->projpos + idVec3(0, 0, 50), muzzleAxis, 1, 0, 0, 5.0f);
 		wave--;
 	}
 	
@@ -164,8 +164,8 @@ stateResult_t rvWeaponGrenadeLauncher::State_Fire ( const stateParms_t& parms ) 
 	switch ( parms.stage ) {
 		case STAGE_INIT:
 			nextAttackTime = gameLocal.time + ((fireRate + fireRate) * owner->PowerUpModifier ( PMOD_FIRERATE ));
-			Attack ( false, 1, spread, 0, 1.0f );
-			wave = 60;
+			Attack ( false, 1, spread, 0, 0.1f );
+			wave = 10;
 			PlayAnim ( ANIMCHANNEL_ALL, GetFireAnim(), 0 );	
 			return SRESULT_STAGE ( STAGE_WAIT );
 	

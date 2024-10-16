@@ -88,7 +88,7 @@ entityDef weapon_grenadelauncher
 
 	"weaponname"				"Grenade Launcher"
 	"def_projectile"			"projectile_napalm"
-	"def2_projectile"			"projectile_nail"
+	"def2_projectile"			"projectile_napalm"
 	"ammoType"					"ammo_grenadelauncher"
 	"clipSize"					"0"
 	"ammoRequired"				"0"
