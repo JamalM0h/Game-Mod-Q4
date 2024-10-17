@@ -324,8 +324,8 @@ void rvWeaponNailgun::Think ( void ) {
 	if ((theproj != nullptr) && (theproj->IsHidden()) && (shotsfired == 1))
 	{
 		idVec3 nailpos = theproj->projpos;
-		LaunchProjectiles(attackDict2, theproj->projpos + idVec3 (0,0,200), muzzleAxis, 1, 0, 0, 1.0f);
-		theproj->Launch(nailpos + idVec3(0, 0, 200), idVec3(0, 0, -1), pushVelocity, 0, 1.0f);
+		LaunchProjectiles(attackDict2, theproj->projpos + idVec3 (0,0,100), muzzleAxis, 1, 0, 0, 1.0f);
+		theproj->Launch(nailpos + idVec3(0, 0, 100), idVec3(0, 0, -1), pushVelocity, 0, 1.0f);
 		
 		shotsfired = 0;
 		theproj == nullptr;

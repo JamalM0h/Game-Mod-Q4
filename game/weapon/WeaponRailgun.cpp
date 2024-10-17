@@ -4,6 +4,10 @@
 #include "../Game_local.h"
 #include "../Weapon.h"
 
+#ifndef __GAME_PROJECTILE_H__
+#include "../Projectile.h"
+#endif
+
 const idEventDef EV_Railgun_RestoreHum( "<railgunRestoreHum>", "" );
 
 class rvWeaponRailgun : public rvWeapon {
@@ -101,10 +105,22 @@ void rvWeaponRailgun::PostSave ( void ) {
 rvWeaponRailgun::Think
 ================
 */
+
+int blackhole;
+
 void rvWeaponRailgun::Think ( void ) {
 
 	// Let the real weapon think first
 	rvWeapon::Think ( );
+
+	if ((theproj != nullptr) && (theproj->IsHidden()) && (blackhole >= 2))
+	{
+		idVec3 blackholpos = theproj->projpos;
+		LaunchProjectiles(attackDict2, blackholpos, muzzleAxis, 1, 0, 8, 1.0f);
+
+		blackhole = 0;
+		theproj = nullptr;
+	}
 
 	if ( zoomGui && wsfl.zoom && !gameLocal.isMultiplayer ) {
 		int ammo = AmmoInClip();
@@ -187,6 +203,7 @@ stateResult_t rvWeaponRailgun::State_Fire ( const stateParms_t& parms ) {
 	switch ( parms.stage ) {
 		case STAGE_INIT:
 			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
+			blackhole++;
 			Attack ( false, 1, spread, 0, 1.0f );
 			PlayAnim ( ANIMCHANNEL_ALL, "fire", 0 );	
 			return SRESULT_STAGE ( STAGE_WAIT );

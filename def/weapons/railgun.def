@@ -84,7 +84,7 @@ entityDef weapon_railgun
   	"joint_view_barrel"			"srocket_muzzle_flash"
 	"joint_world_flash"			"muzzle_flash"
 
-	"fireRate"				"1.6"
+	"fireRate"				"2"
 	"spread"				"0"
 
 	"inv_weapon"				"weapon_railgun"
@@ -93,12 +93,13 @@ entityDef weapon_railgun
 	"inv_icon"				"gfx/guis/hud/icons/item_railgun"
 	"inv_name"				"#str_107408"
 	
-	"def_hitscan"				"hitscan_railgun"	
+	"def_projectile"		    "projectile_blaster_charged"
+	"def2_projectile"           "projectile_dmg"
 	"mtr_crosshair"				"gfx/guis/crosshairs/crosshair_railgun"
 
 	"ammoType"				"ammo_railgun"
-	"ammoRequired"				"1"
-	"clipSize"				"3"
+	"ammoRequired"				"0"
+	"clipSize"				"0"
 	"lowAmmo"				"1"
 	"continuousFire"			"1"
 	"dryFireReload" 			"1"
