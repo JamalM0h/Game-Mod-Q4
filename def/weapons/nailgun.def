@@ -128,7 +128,7 @@ entityDef weapon_nailgun
 	"def2_projectile"		    "projectile_rocket"
 	"ammoType"					"ammo_nailgun"
 	"ammoRequired"				"1"
-	"clipSize"					"200"
+	"clipSize"					"100"
 	"lowAmmo"					"1"
 
 	"mtr_flashShader"			"lights/muzzleflash"
@@ -420,7 +420,7 @@ entityDef projectile_nail
 	"def_splash_damage"			"damage_nailSplash"
 																											
 	"health"					"0"
-	"speed"						"12000"
+	"speed"						"1200"
 	"gravity"					"0"
 	"fuse"						"4"
 								
@@ -452,39 +452,6 @@ entityDef projectile_nail
 	"fx_impact_glass_mp"		"effects/weapons/nailgun/impact_default_mp.fx"
 	"fx_impact_bpglass_mp"		"effects/weapons/nailgun/impact_default_mp.fx"
 	"fx_impact_electronics_mp"	"effects/weapons/nailgun/impact_default_mp.fx"
-	
-	"fx_teleport_enter"		"effects/mp/item_teleport.fx"
-	"fx_teleport"			"effects/mp/item_teleport.fx"
-}
-
-entityDef projectile_hyperblaster
-{
-	"inherit"					"projectile_blaster"
-
-	"size"						"3 3 3"
-	"cone"						"2"
-	"clipmask_largeshot"		"0"
-	"def_damage"				"damage_hyperblaster"
-	
-	"speed"						"2000"
-	"orient_towards_motion"		"1"
-
-	"fx_impact"			"effects/weapons/hyperblaster/impact_default.fx"
-	"fx_fly"			"effects/weapons/hyperblaster/fly.fx"
-	"fx_impact_concrete"		"effects/weapons/hyperblaster/impact_concrete.fx"
-	"fx_impact_rock"		"effects/weapons/hyperblaster/impact_concrete.fx"
-	"fx_impact_glass"		"effects/weapons/hyperblaster/impact_glass.fx"					
-	"fx_impact_bpglass"		"effects/weapons/hyperblaster/impact_bpglass.fx"
-	"fx_impact_electronics"		"effects/weapons/hyperblaster/impact_electronics.fx"	
-	"fx_impact_flesh"		"effects/weapons/hyperblaster/impact_flesh.fx"
-	"fx_impact_monstermetal"	"effects/weapons/hyperblaster/impact_flesh.fx"	
-	"fx_trail"			""
-	"fx_impact_mp"			"effects/weapons/hyperblaster/impact_default_mp.fx"
-	"fx_impact_concrete_mp"		"effects/weapons/hyperblaster/impact_default_mp.fx"
-	"fx_impact_rock_mp"		"effects/weapons/hyperblaster/impact_default_mp.fx"
-	"fx_impact_glass_mp"		"effects/weapons/hyperblaster/impact_default_mp.fx"
-	"fx_impact_bpglass_mp"		"effects/weapons/hyperblaster/impact_default_mp.fx"
-	"fx_impact_electronics_mp"	"effects/weapons/hyperblaster/impact_default_mp.fx"
 	
 	"fx_teleport_enter"		"effects/mp/item_teleport.fx"
 	"fx_teleport"			"effects/mp/item_teleport.fx"

@@ -319,7 +319,7 @@ void rvWeaponLightningGun::Think ( void ) {
 		nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 		Attack ( currentPath.target, dir, power );
 
-		owner->SetOrigin(origin + idVec3(0,0,-50));
+		owner->SetOrigin(origin + idVec3(0,0,-55));
 
 		for ( i = 0; i < chainLightning.Num(); i ++, power *= 0.75f ) {
 			Attack ( chainLightning[i].target, chainLightning[i].normal, power );

@@ -93,7 +93,7 @@ entityDef weapon_dmg
 	"joint_world_flash"			"muzzle_flash"
 	"joint_core"				"inner_ring"
 
-	"fireRate"					"2"
+	"fireRate"					"0.2"
 	"spread"					"0"
 
 	"inv_weapon"				"weapon_dmg"
@@ -104,9 +104,10 @@ entityDef weapon_dmg
 
 	"weaponname"				"Dark Matter Gun"
 	"def_projectile"			"projectile_dmg"
+	"def2_projectile"           "projectile_rocket"
 	"ammoType"					"ammo_dmg"
-	"clipSize"					"1"
-	"ammoRequired"				"1"
+	"clipSize"					"0"
+	"ammoRequired"				"0"
 	"mtr_icon"					"gfx/guis/hud/icons/gun_darkmatter"
 
 //	"muzzle_kick_time"			"0.8"

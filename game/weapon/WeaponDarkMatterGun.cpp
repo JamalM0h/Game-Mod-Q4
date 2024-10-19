@@ -304,6 +304,9 @@ stateResult_t rvWeaponDarkMatterGun::State_Idle( const stateParms_t& parms ) {
 rvWeaponDarkMatterGun::State_Fire
 ================
 */
+
+int loadedrockets;
+
 stateResult_t rvWeaponDarkMatterGun::State_Fire ( const stateParms_t& parms ) {
 	enum {
 		STAGE_INIT,
@@ -312,17 +315,24 @@ stateResult_t rvWeaponDarkMatterGun::State_Fire ( const stateParms_t& parms ) {
 	switch ( parms.stage ) {
 		case STAGE_INIT:
 			StopRings ( );
-
-			nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
-			Attack ( false, 1, spread, 0, 1.0f );
+			nextAttackTime = gameLocal.time + ((fireRate * owner->PowerUpModifier ( PMOD_FIRERATE )));
+			if (loadedrockets <= 5)
+			{
+				loadedrockets++;
+			}
 			PlayAnim ( ANIMCHANNEL_ALL, "fire", 0 );	
 			return SRESULT_STAGE ( STAGE_WAIT );
 	
 		case STAGE_WAIT:		
-			if ( AnimDone ( ANIMCHANNEL_ALL, 2 ) || (gameLocal.isMultiplayer && gameLocal.time >= nextAttackTime) ) {
+			if ( AnimDone ( ANIMCHANNEL_ALL, 2) || (gameLocal.isMultiplayer && gameLocal.time >= nextAttackTime) ) {
 				SetState ( "Idle", 0 );
 				return SRESULT_DONE;
-			}		
+			}
+			if (loadedrockets > 0 && (!wsfl.attack))
+			{
+				LaunchProjectiles(attackDict2, playerViewOrigin, muzzleAxis, loadedrockets, 5 * loadedrockets, 0, 1.0f);
+				loadedrockets = 0;
+			}
 			return SRESULT_WAIT;
 	}
 	return SRESULT_ERROR;

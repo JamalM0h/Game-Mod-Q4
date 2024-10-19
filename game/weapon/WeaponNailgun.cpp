@@ -321,9 +321,14 @@ void rvWeaponNailgun::Think ( void ) {
 	// Let the real weapon think first
 	rvWeapon::Think ( );
 
-	if ((theproj != nullptr) && (theproj->IsHidden()) && (shotsfired == 1))
+	if ((theproj != nullptr) && (theproj->IsHidden()) && (shotsfired >= 1))
 	{
-		idVec3 nailpos = theproj->projpos;
+		idVec3 nailpos; 
+		if (theproj != nullptr)
+		{
+			nailpos = theproj->projpos;
+		}
+
 		LaunchProjectiles(attackDict2, theproj->projpos + idVec3 (0,0,100), muzzleAxis, 1, 0, 0, 1.0f);
 		theproj->Launch(nailpos + idVec3(0, 0, 100), idVec3(0, 0, -1), pushVelocity, 0, 1.0f);
 		
@@ -684,7 +689,7 @@ stateResult_t rvWeaponNailgun::State_Fire( const stateParms_t& parms ) {
 				nextAttackTime = gameLocal.time + (altFireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 			} else {
 				Attack ( false, 1, spread, -50.0f, 1.0f );
-				shotsfired = 1;
+				shotsfired++;
 				nextAttackTime = gameLocal.time + (fireRate * owner->PowerUpModifier ( PMOD_FIRERATE ));
 			}
 			
