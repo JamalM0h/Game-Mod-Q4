@@ -9282,6 +9282,22 @@ idPlayer::Think
 Called every tic for each player
 ==============
 */
+
+int healthOT = 0;
+int healthdelay;
+int armorstance = 0;
+int armorlength;
+int currentarmor;
+int bufftime;
+int buffsactive = 0;
+
+int cooldowntime = gameLocal.time;
+int cooldownstatus = 1;
+
+int d2class = NULL;
+
+int helpscreen = 0;
+
 void idPlayer::Think( void ) {
 	renderEntity_t *headRenderEnt;
  
@@ -9643,6 +9659,43 @@ void idPlayer::Think( void ) {
 		inBuyZone = false;
 
 	inBuyZonePrev = false;
+
+	if ((healthOT > 0) && (gameLocal.time >= healthdelay))
+	{
+		if (health >= 100)
+		{
+			healthOT = 0;
+			return;
+		}
+
+		this->health++;
+		healthdelay = gameLocal.time + SEC2MS(0.1);
+		healthOT--;
+	}
+
+	if (armorstance == 1)
+	{
+		if (gameLocal.time >= armorlength)
+		{
+			armorstance = 0;
+			this->inventory.armor = currentarmor;
+			return;
+		}
+		this->inventory.armor = 999;
+		
+	}
+
+	if ((buffsactive) && (gameLocal.time >= bufftime))
+	{
+		ClearPowerUps();
+		buffsactive = 0;
+	}
+
+	if (gameLocal.time >= cooldowntime && (cooldownstatus == 0))
+	{
+		this->hud->HandleNamedEvent("offcooldown");
+		cooldownstatus = 1;
+	}
 }
 
 /*
@@ -14077,4 +14130,84 @@ int idPlayer::CanSelectWeapon(const char* weaponName)
 	return weaponNum;
 }
 
+void idPlayer::CastAbility()
+{ 
+	if (gameLocal.time >= cooldowntime && (d2class == 3))
+	{
+		this->GetPhysics()->SetLinearVelocity(idVec3(this->GetPhysics()->GetLinearVelocity().x * 5, this->GetPhysics()->GetLinearVelocity().y * 5, 0));
+		
+		cooldowntime = gameLocal.time + SEC2MS(2);
+		cooldownstatus = 0;
+
+		this->hud->HandleNamedEvent("oncooldown");
+	}
+
+	if (gameLocal.time >= cooldowntime && (d2class == 2))
+	{
+		healthOT = 75;
+		healthdelay = gameLocal.time + SEC2MS(0.1);
+	
+		cooldowntime = gameLocal.time + SEC2MS(10);
+		cooldownstatus = 0;
+
+		this->hud->HandleNamedEvent("oncooldown");
+		 
+	}
+
+	if (gameLocal.time >= cooldowntime && (d2class == 1))
+	{
+		currentarmor = this->inventory.armor;
+	
+		armorstance = 1;
+		armorlength = gameLocal.time + SEC2MS(10);
+	
+		cooldowntime = gameLocal.time + SEC2MS(15);
+		cooldownstatus = 0;
+
+		this->hud->HandleNamedEvent("oncooldown");
+
+	}
+
+	if (gameLocal.time >= cooldowntime && (d2class == 4))
+	{
+		bufftime = gameLocal.time + SEC2MS(8);
+		buffsactive = 1;
+
+		GivePowerUp(POWERUP_HASTE, SEC2MS (8));
+		GivePowerUp(POWERUP_QUADDAMAGE, SEC2MS(8));
+
+		cooldowntime = gameLocal.time + SEC2MS(15);
+		cooldownstatus = 0;
+
+		this->hud->HandleNamedEvent("oncooldown");
+	}
+
+	
+}
+
+void idPlayer::HelpScreen()
+{
+	if (helpscreen == 0)
+	{
+		this->hud->HandleNamedEvent("HelpScreenOn");
+		helpscreen = 1;
+
+		gameLocal.Printf("Help screen opened");
+		gameLocal.Printf("\n");
+		return;
+	}
+
+	if (helpscreen == 1)
+	{
+		this->hud->HandleNamedEvent("HelpScreenOff");
+		helpscreen = 0;
+
+		gameLocal.Printf("Help screen closed");
+		gameLocal.Printf("\n");
+		return;
+	}
+
+	gameLocal.Printf("Help screen nothing");
+	gameLocal.Printf("\n");
+}
 // RITUAL END

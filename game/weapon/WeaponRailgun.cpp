@@ -106,27 +106,27 @@ rvWeaponRailgun::Think
 ================
 */
 
-int blackhole;
+int blackhole = 0;
 
 void rvWeaponRailgun::Think ( void ) {
 
 	// Let the real weapon think first
 	rvWeapon::Think ( );
 
-	if ((theproj != nullptr) && (theproj->IsHidden()) && (blackhole >= 2))
+	if ( zoomGui && wsfl.zoom && !gameLocal.isMultiplayer ) {
+		int ammo = AmmoInClip();
+		if ( ammo >= 0 ) {
+			zoomGui->SetStateInt( "player_ammo", ammo );
+		}			
+	}
+
+	if ((blackhole >= 2) && (theproj != nullptr) && (theproj->IsHidden()))
 	{
 		idVec3 blackholpos = theproj->projpos;
 		LaunchProjectiles(attackDict2, blackholpos, muzzleAxis, 1, 0, 8, 1.0f);
 
 		blackhole = 0;
 		theproj = nullptr;
-	}
-
-	if ( zoomGui && wsfl.zoom && !gameLocal.isMultiplayer ) {
-		int ammo = AmmoInClip();
-		if ( ammo >= 0 ) {
-			zoomGui->SetStateInt( "player_ammo", ammo );
-		}			
 	}
 }
 

@@ -292,6 +292,9 @@ public:
 	int						godmodeDamage;
 	bool					undying;
 
+	int                     cooldownstatus;
+	int						d2class;
+
 	bool					spawnAnglesSet;		// on first usercmd, we must set deltaAngles
 	idAngles				spawnAngles;
 	idAngles				viewAngles;			// player view angles
@@ -794,6 +797,10 @@ public:
 	void					ClampCash( float minCash, float maxCash );
 	void					SetCash( float newCashAmount );
 	void					ResetCash();
+
+	void                    CastAbility( void );
+	void					HelpScreen( void );
+
 // RITUAL END
 
 protected:

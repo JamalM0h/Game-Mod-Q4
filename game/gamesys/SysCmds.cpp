@@ -2941,6 +2941,93 @@ void Cmd_BuyItem_f( const idCmdArgs& args ) {
 }
 // RITUAL END
 
+void Cmd_CastAbility_f(const idCmdArgs& args) {
+	idPlayer* player = gameLocal.GetLocalPlayer();
+
+	gameLocal.Printf("ability casted \n");
+	player->CastAbility();
+
+}
+
+void Cmd_Locate_f(const idCmdArgs& args) {
+	idPlayer* player;
+	idVec3 playerposi;
+	player = gameLocal.GetLocalPlayer();
+	if (!player) {
+		return;
+	}
+	playerposi = player->GetEyePosition();
+	gameLocal.Printf("location: (%f, %f, %f)", playerposi.x, playerposi.y, playerposi.z);
+	gameLocal.Printf("\n");
+
+}
+
+void Cmd_Titan_f(const idCmdArgs& args) {
+	idPlayer* player = gameLocal.GetLocalPlayer();;
+
+	    player->SelectWeapon("blaster");
+		player->inventory.weapons = 1;
+		player->d2class = 1;
+
+		GiveStuffToPlayer(player, "weapon_shotgun", NULL);
+		GiveStuffToPlayer(player, "weapon_hyperblaster", NULL);
+		GiveStuffToPlayer(player, "weapon_lightninggun", NULL);
+
+		gameLocal.Printf("class changed: Titan");
+		gameLocal.Printf("\n");
+}
+
+void Cmd_Warlock_f(const idCmdArgs& args) {
+	idPlayer* player = gameLocal.GetLocalPlayer();;
+
+	    player->SelectWeapon("blaster");
+		player->inventory.weapons = 1;
+		player->d2class = 2;
+
+		GiveStuffToPlayer(player, "weapon_grenadelauncher", NULL);
+		GiveStuffToPlayer(player, "weapon_nailgun", NULL);
+		GiveStuffToPlayer(player, "weapon_lightninggun", NULL);
+
+		gameLocal.Printf("class changed: Warlock");
+		gameLocal.Printf("\n");
+}
+
+void Cmd_Hunter_f(const idCmdArgs& args) {
+	idPlayer* player = gameLocal.GetLocalPlayer();;
+
+	    player->SelectWeapon("blaster");
+	    player->inventory.weapons = 1;
+		player->d2class = 3;
+
+		GiveStuffToPlayer(player, "weapon_railgun", NULL);
+		GiveStuffToPlayer(player, "weapon_rocketlauncher", NULL);
+		GiveStuffToPlayer(player, "weapon_lightninggun", NULL);
+
+		gameLocal.Printf("class changed: Hunter");
+		gameLocal.Printf("\n");
+}
+
+void Cmd_Vanguard_f(const idCmdArgs& args) {
+	idPlayer* player = gameLocal.GetLocalPlayer();;
+
+		player->SelectWeapon("blaster");
+	    player->inventory.weapons = 1; 
+		player->d2class = 4;
+
+		GiveStuffToPlayer(player, "weapon_dmg", NULL);
+		GiveStuffToPlayer(player, "weapon_machinegun", NULL);
+		GiveStuffToPlayer(player, "weapon_lightninggun", NULL);
+
+		gameLocal.Printf("class changed: Vanguard");
+		gameLocal.Printf("\n");
+}
+
+void Cmd_HelpMenu_f(const idCmdArgs& args) {
+	idPlayer* player = gameLocal.GetLocalPlayer();;
+	
+	player->HelpScreen();
+}
+
 void Cmd_PlayerEmote_f( const idCmdArgs& args ) {
 	if( gameLocal.GetLocalPlayer() == NULL ) {
 		gameLocal.Warning( "Cmd_Emote_f() - local player is NULL" );
@@ -3231,6 +3318,13 @@ void idGameLocal::InitConsoleCommands( void ) {
 // squirrel: Mode-agnostic buymenus
 	cmdSystem->AddCommand( "buyMenu",				Cmd_ToggleBuyMenu_f,		CMD_FL_GAME,				"Toggle buy menu (if in a buy zone and the game type supports it)" );
 	cmdSystem->AddCommand( "buy",					Cmd_BuyItem_f,				CMD_FL_GAME,				"Buy an item (if in a buy zone and the game type supports it)" );
+	cmdSystem->AddCommand( "cast",                  Cmd_CastAbility_f,          CMD_FL_GAME,                "Casts");
+	cmdSystem->AddCommand( "titan",                 Cmd_Titan_f,          CMD_FL_GAME,                "Titan Class");
+	cmdSystem->AddCommand( "warlock",               Cmd_Warlock_f,          CMD_FL_GAME,                "Warlock Class");
+	cmdSystem->AddCommand( "hunter",                Cmd_Hunter_f,          CMD_FL_GAME,                "Hunter Class");
+	cmdSystem->AddCommand( "vanguard",              Cmd_Vanguard_f,          CMD_FL_GAME,                "Vanguard Class");
+	cmdSystem->AddCommand( "helpmenu",               Cmd_HelpMenu_f,          CMD_FL_GAME,               "Opens help menu");
+	cmdSystem->AddCommand( "locate",                Cmd_Locate_f,               CMD_FL_GAME,                "Locate");
 // RITUAL END
 
 }

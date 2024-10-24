@@ -312,7 +312,7 @@ rvWeaponNailgun::Think
 ================
 */
 
-int shotsfired;
+int shotsfired = 0;
 
 void rvWeaponNailgun::Think ( void ) {
 	idEntity* ent;
@@ -321,19 +321,19 @@ void rvWeaponNailgun::Think ( void ) {
 	// Let the real weapon think first
 	rvWeapon::Think ( );
 
-	if ((theproj != nullptr) && (theproj->IsHidden()) && (shotsfired >= 1))
+	if ((shotsfired >= 1) && (theproj != nullptr) && (theproj->IsHidden()))
 	{
-		idVec3 nailpos; 
+		idVec3 nailpos;
 		if (theproj != nullptr)
 		{
 			nailpos = theproj->projpos;
 		}
 
-		LaunchProjectiles(attackDict2, theproj->projpos + idVec3 (0,0,100), muzzleAxis, 1, 0, 0, 1.0f);
+		LaunchProjectiles(attackDict2, theproj->projpos + idVec3(0, 0, 100), muzzleAxis, 1, 0, 0, 1.0f);
 		theproj->Launch(nailpos + idVec3(0, 0, 100), idVec3(0, 0, -1), pushVelocity, 0, 1.0f);
-		
+
 		shotsfired = 0;
-		theproj == nullptr;
+		theproj = nullptr;
 	}
 
 	// If no guide range is set then we dont have the mod yet
