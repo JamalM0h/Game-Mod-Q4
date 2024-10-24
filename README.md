@@ -6,7 +6,7 @@ The mod includes:
  - 4 classes each with an already prebuilt loadout of 4 weapons and 1 ability.
  - A cooldown UI element in the bottom right corner.
 
-To install the mod extract pak001 contents into a folder.
+To install the mod extract pak001.pk4 contents into a folder.
 
 For the help menu press "h" once in a level. 
 
