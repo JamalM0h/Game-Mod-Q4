@@ -681,7 +681,9 @@ entityDef player_marine
 
 	"def_weapon10"						"weapon_napalmgun"
 	"weapon10_best"						"0"
-	"weapon10_cycle"					"1"	
+	"weapon10_cycle"					"1"
+
+	"def2_projectile"                   "projectile_rocket"
 
 	"mtr_wound"						"textures/decals/hurt02"
 	"mtr_splat"						"textures/decals/dsplat2"
