@@ -5,6 +5,7 @@ The mod includes:
  - 4 abilities.
  - 4 classes each with an already prebuilt loadout of 4 weapons and 1 ability.
  - A cooldown UI element in the bottom right corner.
+ - A help menu detailing the classes and corresponding key
 
 To install the mod extract pak001.pk4 contents into a folder in the Quake 4 folder.
 
