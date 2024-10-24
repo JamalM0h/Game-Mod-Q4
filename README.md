@@ -7,6 +7,12 @@ The mod includes:
  - A cooldown UI element in the bottom right corner.
  - A help menu detailing the classes and corresponding key
 
+Abilities
+- Titan: Temp Damage Reduction
+- Warlock: Heal over time
+- Hunter: Air Dash
+- Vanguard: Increased damage and firerate  
+
 To install the mod extract pak001.pk4 contents into a folder in the Quake 4 folder.
 
 For the help menu press "h" once in a level. 
